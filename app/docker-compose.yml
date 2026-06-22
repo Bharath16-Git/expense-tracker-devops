@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    container_name: expense-postgres-compose
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: expenses_db
+    ports:
+      - "5433:5432"
+
+  app:
+    build:
+      context: .
+      dockerfile: app/Dockerfile
+    container_name: expense-flask-app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
